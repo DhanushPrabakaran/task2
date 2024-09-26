@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Signup controller
 exports.signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
     }
 
     // Create new user
-    await User.createUser(email, password);
+    await User.createUser(name, email, password);
 
     // Create JWT token
     const token = jwt.sign({ email }, process.env.JWT_SECRET, {

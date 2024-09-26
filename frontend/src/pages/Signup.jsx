@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signup } = useContext(AuthContext);
@@ -12,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signup({ email, password });
+      await signup({ name, email, password });
       navigate("/dashboard");
     } catch (error) {
       console.error("Signup failed", error);
@@ -26,6 +27,16 @@ const Signup = () => {
         className="bg-white p-8 rounded shadow-md w-96"
       >
         <h2 className="text-2xl font-bold mb-5">Sign Up</h2>
+
+        <input
+          type="text"
+          className="input input-bordered w-full mb-4"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
         <input
           type="email"
           className="input input-bordered w-full mb-4"

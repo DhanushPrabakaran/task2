@@ -2,13 +2,13 @@ const db = require("../config/db");
 const bcrypt = require("bcryptjs");
 
 class User {
-  static async createUser(email, password) {
+  static async createUser(name, email, password) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO users (email, password) VALUES (?, ?)";
-      db.query(query, [email, hashedPassword], (err, results) => {
+      const query = "INSERT INTO users (name, email, password) VALUES (?, ?,?)";
+      db.query(query, [name, email, hashedPassword], (err, results) => {
         if (err) reject(err);
         resolve(results);
       });

@@ -1,21 +1,17 @@
-// src/context/AuthContext.jsx
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import axios from "axios";
 
-// Create context
 export const AuthContext = createContext();
 
-// Auth Provider
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({ token: null, isAuthenticated: false });
-
-  useEffect(() => {
+  const [auth, setAuth] = useState(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setAuth({ token, isAuthenticated: true });
-    }
-  }, []);
+    return {
+      token,
+      isAuthenticated: !!token,
+    };
+  });
 
   const login = async (user) => {
     const response = await axios.post(
