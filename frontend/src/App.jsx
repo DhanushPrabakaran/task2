@@ -46,7 +46,7 @@ const App = () => {
             }
           />
           <Route
-            path="/category/:userId"
+            path="/category/:Category"
             element={
               <ProtectedRoute>
                 <CategoryProducts />

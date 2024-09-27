@@ -2,56 +2,77 @@ import { useEffect, useState } from "react";
 
 const Products = () => {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10); // products per page
+  const [total, setTotal] = useState(0); // total products count
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const offset = (page - 1) * limit;
       try {
         const response = await fetch(
-          "http://localhost:3000/products/allproducts"
+          `http://localhost:3000/products/allproducts?limit=${limit}&offset=${offset}&search=${searchTerm}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const jsonData = await response.json();
-        
-        // alert(jsonData);
         setData(jsonData.data);
+        setTotal(jsonData.total);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
     };
-    console.log("cbeuv");
+
     fetchProducts();
-  }, []); // Run only once when the component mounts
+  }, [page, searchTerm]); // Re-fetch products when page or searchTerm changes
+
+  const handleSearch = () => {
+    setPage(1); // reset to first page on search
+  };
+
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <div className=" bg-base-200 min-h-screen">
-      <div className=" p-4 flex flex-col justify-center align-middle items-center">
+      <div className="p-4 flex flex-col justify-center items-center">
         <div className="join">
           <input
             className="input input-bordered join-item"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="btn join-item rounded-r-full">Search</button>
+          <button
+            className="btn join-item rounded-r-full"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
-        {/* {JSON.stringify(data)} */}
-        <div className="w-full h-full flex flex-wrap align-middle items-center justify-center ">
-          {/* </div> */}
 
+        <div className="w-full h-full flex flex-wrap items-center justify-center ">
           {data.length > 0 ? (
-            data.map((data) => (
+            data.map((product) => (
               <div
-                key={data.id}
+                key={product.id}
                 className="card bg-base-100 w-80 shadow-xl m-2"
               >
                 <figure>
-                  <img src={data.image_url} alt="Shoes" width={200} />
+                  <img
+                    src={product.image_url}
+                    alt={product.product_name}
+                    width={200}
+                  />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{data.product_name}</h2>
-                  <p>{data.description}</p>
+                  <h2 className="card-title">{product.product_name}</h2>
+                  <p>{product.description}</p>
                   <div className="card-actions justify-end">
-                    <div className="badge badge-outline">{data.category}</div>
+                    <div className="badge badge-outline">
+                      {product.category}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,32 +81,25 @@ const Products = () => {
             <p>Loading products...</p>
           )}
         </div>
-        <div className="join">
-          <input
-            className="join-item btn btn-square"
-            type="radio"
-            name="options"
-            aria-label="1"
-            defaultChecked
-          />
-          <input
-            className="join-item btn btn-square"
-            type="radio"
-            name="options"
-            aria-label="2"
-          />
-          <input
-            className="join-item btn btn-square"
-            type="radio"
-            name="options"
-            aria-label="3"
-          />
-          <input
-            className="join-item btn btn-square"
-            type="radio"
-            name="options"
-            aria-label="4"
-          />
+
+        <div className="join mt-4">
+          <button
+            className="btn"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Previous
+          </button>
+          <span className="px-4">
+            {page} of {totalPages}
+          </span>
+          <button
+            className="btn"
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
@@ -93,5 +107,3 @@ const Products = () => {
 };
 
 export default Products;
-
-// {"id":1,"product_name":"Teddy Bear","category":"toys","stock":100,"current_price":"19.99","discount_price":"14.99","created_by":"admin","description":"A soft teddy bear for cuddling.","image_url":"https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-download-in-png-blend-fbx-gltf-file-formats--tag-packages-box-marketing-advertisement-pack-branding-icons-4863042.png?f=webp"}
