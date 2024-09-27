@@ -15,4 +15,20 @@ exports.allProducts = async (req, res) => {
     res.status(500).send("server error in getting all producs");
   }
 };
-// module.exports = allProducts;
+
+exports.CategoryProducts = async (req, res) => {
+  const { category } = req.params;
+  try {
+    const allProducts = await Products.categoryProducts(category);
+    if (allProducts) {
+      return res.status(200).send(
+        JSON.stringify({
+          data: allProducts,
+        })
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("server error in getting all producs");
+  }
+};

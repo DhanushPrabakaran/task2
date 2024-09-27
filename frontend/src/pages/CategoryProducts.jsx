@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const Products = () => {
+const CategoryProducts = () => {
+  
+  const { userId } = useParams();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/products/allproducts"
+          `http://localhost:3000/products/category/${userId}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const jsonData = await response.json();
-        
+
         // alert(jsonData);
         setData(jsonData.data);
       } catch (error) {
@@ -22,7 +25,7 @@ const Products = () => {
     };
     console.log("cbeuv");
     fetchProducts();
-  }, []); // Run only once when the component mounts
+  }); // Run only once when the component mounts
 
   return (
     <div className=" bg-base-200 min-h-screen">
@@ -92,6 +95,4 @@ const Products = () => {
   );
 };
 
-export default Products;
-
-// {"id":1,"product_name":"Teddy Bear","category":"toys","stock":100,"current_price":"19.99","discount_price":"14.99","created_by":"admin","description":"A soft teddy bear for cuddling.","image_url":"https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-download-in-png-blend-fbx-gltf-file-formats--tag-packages-box-marketing-advertisement-pack-branding-icons-4863042.png?f=webp"}
+export default CategoryProducts;

@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Products from "./pages/Products";
+import Category from "./pages/Category";
+import CategoryProducts from "./pages/CategoryProducts";
 const App = () => {
   return (
     <AuthProvider>
@@ -27,7 +29,30 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/allproducts" element={<Products />} />
+          <Route
+            path="/allproducts"
+            element={
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category"
+            element={
+              <ProtectedRoute>
+                <Category />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category/:userId"
+            element={
+              <ProtectedRoute>
+                <CategoryProducts />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>

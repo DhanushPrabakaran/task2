@@ -30,7 +30,7 @@ const Header = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a href="/catagory">Catogary</a>
+                <a href="/category">Catogary</a>
               </li>
               <li>
                 <a href="/allproducts">All Products</a>
@@ -48,7 +48,7 @@ const Header = () => {
         {isAuthenticated ? (
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a href="/catagory">Catogary</a>
+              <a href="/category">Catogary</a>
             </li>
             <li>
               <a href="/allproducts">All Products</a>
