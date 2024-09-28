@@ -1,5 +1,14 @@
 const db = require("../config/db");
 // Model: Products.js
+const solr = require("solr-client");
+
+// Create Solr client
+const client = solr.createClient({
+  host: "localhost",
+  port: "8983",
+  core: "products",
+  path: "/solr",
+});
 class Products {
   static async allProducts(limit, offset, search) {
     return new Promise((resolve, reject) => {

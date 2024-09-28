@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server"
+    "test": "newman run ./test/task2ApiTesting.postman_collection.json -r htmlextra --reporter-htmlextra-export ./results/report.html",
+    "start": "node ./test/apiTesting.js && nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +18,11 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3",
     "mysql": "^2.18.1",
-    "mysql2": "^3.11.3"
+    "mysql2": "^3.11.3",
+    "solr-client": "^0.10.0-rc10"
   },
   "devDependencies": {
+    "newman": "^6.2.1",
     "nodemon": "^3.1.7"
   }
 }

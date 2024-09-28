@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (user) => {
     const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
+      "http://localhost:3000/api/auth/signin",
       user
     );
     const token = response.data.token;

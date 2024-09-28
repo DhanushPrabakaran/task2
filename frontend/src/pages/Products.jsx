@@ -26,7 +26,7 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, [page, searchTerm]); // Re-fetch products when page or searchTerm changes
+  }, [limit, page, searchTerm]); // Re-fetch products when page or searchTerm changes
 
   const handleSearch = () => {
     setPage(1); // reset to first page on search

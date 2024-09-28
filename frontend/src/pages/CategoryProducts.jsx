@@ -31,7 +31,7 @@ const CategoryProducts = () => {
       }
     };
     fetchProducts();
-  }, [Category, currentPage]); // Fetch again when Category or currentPage changes
+  }, [Category, currentPage, productsPerPage]); // Fetch again when Category or currentPage changes
 
   // Handle search functionality
   const handleSearch = () => {
