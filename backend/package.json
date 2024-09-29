@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "newman run ./test/task2ApiTesting.postman_collection.json -r htmlextra --reporter-htmlextra-export ./results/report.html",
-    "start": "node ./test/apiTesting.js && nodemon server"
+    "start": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -19,10 +19,11 @@
     "mongoose": "^8.6.3",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
-    "solr-client": "^0.10.0-rc10"
+    "solr-client": "^0.2.1",
+    "solr-node": "^1.2.1"
   },
   "devDependencies": {
-    "newman": "^6.2.1",
+    "newman": "^6.2.0",
     "nodemon": "^3.1.7"
   }
 }

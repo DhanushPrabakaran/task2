@@ -20,7 +20,7 @@ app.use(async (req, res, next) => {
 app.use("/api/auth", authRoutes);
 //
 
-app.use("/api/products", authmiddleware, productRoutes);
+app.use("/api/products", productRoutes);
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

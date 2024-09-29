@@ -21,6 +21,24 @@ exports.allProducts = async (req, res) => {
   }
 };
 
+exports.allProductsWithoutLimit = async (req, res) => {
+  try {
+    const allProducts = await Products.allProductsWithoutLimit();
+    const totalProducts = await Products.getTotalProductCount("");
+
+    if (allProducts) {
+      return res.status(200).send(
+        JSON.stringify({
+          data: allProducts,
+          total: totalProducts,
+        })
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("server error in getting all producs");
+  }
+};
 exports.CategoryProducts = async (req, res) => {
   const { category } = req.params;
   const { limit = 10, offset = 0, search = "" } = req.query;

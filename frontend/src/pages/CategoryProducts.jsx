@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import axiosInstance from "../utils/axios";
+import ProjectCard from "../components/ProjectCard";
 const CategoryProducts = () => {
   const { Category } = useParams();
   const [data, setData] = useState([]);
@@ -16,13 +17,19 @@ const CategoryProducts = () => {
       const offset = (currentPage - 1) * productsPerPage;
 
       try {
-        const response = await fetch(
-          `http://localhost:3000/products/category/${Category}?limit=${productsPerPage}&offset=${offset}`
+        const response = await axiosInstance.get(
+          `/api/products/category/${Category}`,
+          {
+            params: {
+              limit: productsPerPage,
+              offset: offset,
+            },
+          }
         );
-        if (!response.ok) {
+        if (!response) {
           throw new Error("Network response was not ok");
         }
-        const jsonData = await response.json();
+        const jsonData = await response.data;
         setData(jsonData.data);
         setFilteredData(jsonData.data);
         setTotalCount(jsonData.totalCount); // Set the total product count
@@ -78,38 +85,38 @@ const CategoryProducts = () => {
             Search
           </button>
         </div>
-
         {/* Display products */}
         <div className="w-full h-full flex flex-wrap items-center justify-center">
           {filteredData.length > 0 ? (
             filteredData.map((product) => (
-              <div
-                key={product.id}
-                className="card bg-base-100 w-80 shadow-xl m-2"
-              >
-                <figure>
-                  <img
-                    src={product.image_url}
-                    alt={product.product_name}
-                    width={200}
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">{product.product_name}</h2>
-                  <p>{product.description}</p>
-                  <div className="card-actions justify-end">
-                    <div className="badge badge-outline">
-                      {product.category}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ProjectCard key={product.id} data={product} />
+              // <div
+              //   key={product.id}
+              //   className="card bg-base-100 w-80 shadow-xl m-2"
+              // >
+              //   <figure>
+              //     <img
+              //       src={product.image_url}
+              //       alt={product.product_name}
+              //       width={200}
+              //     />
+              //   </figure>
+              //   <div className="card-body">
+              //     {" "}
+              //     <h2 className="card-title">{product.product_name}</h2>
+              //     <p>{product.description}</p>
+              //     <div className="card-actions justify-end">
+              //       <div className="badge badge-outline">
+              //         {product.category}
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>
             ))
           ) : (
             <p>Loading products...</p>
           )}
         </div>
-
         {/* Pagination controls */}
         <div className="join mt-4">
           <button

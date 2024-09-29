@@ -10,6 +10,16 @@ const client = solr.createClient({
   path: "/solr",
 });
 class Products {
+  static async allProductsWithoutLimit() {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT * FROM products`;
+      db.query(query, (err, results) => {
+        if (err) reject(err);
+        resolve(results);
+      });
+    });
+  }
   static async allProducts(limit, offset, search) {
     return new Promise((resolve, reject) => {
       const query = `

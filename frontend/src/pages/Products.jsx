@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import axiosInstance from "../utils/axios";
 const Products = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,13 +11,19 @@ const Products = () => {
     const fetchProducts = async () => {
       const offset = (page - 1) * limit;
       try {
-        const response = await fetch(
-          `http://localhost:3000/products/allproducts?limit=${limit}&offset=${offset}&search=${searchTerm}`
-        );
-        if (!response.ok) {
+        const response = await axiosInstance.get("/api/products/allproducts", {
+          params: {
+            limit: limit,
+            offset: offset,
+            search: searchTerm,
+          },
+        });
+        // console.log(JSON.stringify(response));
+        if (!response) {
           throw new Error("Network response was not ok");
         }
-        const jsonData = await response.json();
+        const jsonData = await response.data;
+        // alert("data renderd", jsonData);
         setData(jsonData.data);
         setTotal(jsonData.total);
       } catch (error) {
