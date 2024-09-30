@@ -1,12 +1,13 @@
-var SolrNode = require("solr-node");
+const solr = require("solr-client");
 
-// Create client
-var client = new SolrNode({
-  host: "127.0.0.1",
+// Create Solr client
+const solrClient = solr.createClient({
+  host: "localhost",
   port: "8983",
-  core: "test",
-  protocol: "http",
+  core: "productcore", // Replace 'my_core' with your Solr core name
+  path: "/solr",
 });
 
+module.exports = solrClient;
 // Set logger level (can be set to DEBUG, INFO, WARN, ERROR, FATAL or OFF)
-require("log4js").getLogger("solr-node").level = "DEBUG";
+// require("log4js").getLogger("solr-node").level = "DEBUG";
