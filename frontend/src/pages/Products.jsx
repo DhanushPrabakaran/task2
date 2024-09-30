@@ -35,7 +35,7 @@ const Products = () => {
         const jsonData = await response;
         console.log(jsonData);
         setData(jsonData.data.data);
-        setTotal(jsonData.total);
+        setTotal(parseInt(jsonData.data.total));
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }

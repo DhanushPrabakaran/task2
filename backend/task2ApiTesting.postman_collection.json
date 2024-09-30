@@ -360,13 +360,6 @@
 						"products",
 						"category",
 						"toys"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "",
-							"disabled": true
-						}
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -409,26 +402,26 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "{{base_url}}"
+			"value": "http://localhost:3000/api"
 		},
 		{
 			"key": "token",
-			"value": "",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ikt5cmEuQ29ubkB5YWhvby5jb20iLCJpYXQiOjE3Mjc1NDQ4MjMsImV4cCI6MTcyNzU0ODQyM30.Fj7TvBnRjYDhY3u4ADKVUWaVn_qrFOAW5x0u71ruZFQ",
 			"type": "string"
 		},
 		{
 			"key": "name",
-			"value": "",
+			"value": "Dallas Wyman",
 			"type": "string"
 		},
 		{
 			"key": "email",
-			"value": "",
+			"value": "Kyra.Conn@yahoo.com",
 			"type": "string"
 		},
 		{
 			"key": "password",
-			"value": "",
+			"value": "YxtwV8yM5UWN2_8",
 			"type": "string"
 		}
 	]
