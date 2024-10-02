@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
-
+import ProjectCard from "../components/ProjectCard";
 const Products = () => {
   const [data, setData] = useState([]);
   const [flag, setFlag] = useState(false); // Toggle between normal and Solr search
@@ -11,14 +11,14 @@ const Products = () => {
 
   // Common function for fetching products (Solr or normal based on flag)
   useEffect(() => {
+
     const fetchProducts = async () => {
       const offset = (page - 1) * limit;
       try {
         const searchParams = {
           limit: limit,
           offset: offset,
-          search: searchTerm,
-        };
+          search: searchTerm,};
 
         const endpoint = flag
           ? "/api/products/allproductsolr" // Solr-based search
@@ -83,27 +83,29 @@ const Products = () => {
         <div className="w-full h-full flex flex-wrap items-center justify-center mt-4">
           {data.length > 0 ? (
             data.map((product) => (
-              <div
-                key={product.id}
-                className="card bg-base-100 w-80 shadow-xl m-2"
-              >
-                <figure>
-                  <img
-                    src={product.image_url}
-                    alt={product.product_name}
-                    width={200}
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">{product.product_name}</h2>
-                  <p>{product.description}</p>
-                  <div className="card-actions justify-end">
-                    <div className="badge badge-outline">
-                      {product.category}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ProjectCard key={product.id} data={product} />
+
+              // <div
+              //   key={product.id}
+              //   className="card bg-base-100 w-80 shadow-xl m-2"
+              // >
+              //   <figure>
+              //     <img
+              //       src={product.image_url}
+              //       alt={product.product_name}
+              //       width={200}
+              //     />
+              //   </figure>
+              //   <div className="card-body">
+              //     <h2 className="card-title">{product.product_name}</h2>
+              //     <p>{product.description}</p>
+              //     <div className="card-actions justify-end">
+              //       <div className="badge badge-outline">
+              //         {product.category}
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>
             ))
           ) : (
             <p>Loading products...</p>

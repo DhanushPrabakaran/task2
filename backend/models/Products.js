@@ -9,6 +9,7 @@ const client = solr.createClient({
   core: "products",
   path: "/solr",
 });
+
 class Products {
   static async allProductsWithoutLimit() {
     return new Promise((resolve, reject) => {

@@ -60,4 +60,6 @@
 ('Swimwear', 'clothes', 90, 39.99, 29.99, 'admin', 'Comfortable swimwear.', 'https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-download-in-png-blend-fbx-gltf-file-formats--tag-packages-box-marketing-advertisement-pack-branding-icons-4863042.png?f=webp'),
 ('Belt', 'clothes', 110, 24.99, 19.99, 'admin', 'Stylish leather belt.', 'https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-download-in-png-blend-fbx-gltf-file-formats--tag-packages-box-marketing-advertisement-pack-branding-icons-4863042.png?f=webp'),
 ('Backpack', 'clothes', 140, 49.99, 39.99, 'admin', 'Durable backpack for travel.', 'https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-download-in-png-blend-fbx-gltf-file-formats--tag-packages-box-marketing-advertisement-pack-branding-icons-4863042.png?f=webp')"}
-newman run ./test/task2ApiTesting.postman_collection.json -r htmlextra --reporter-htmlextra-export ./results/report.html
+
+newman run ./test/task2ApiTesting.postman_collection.json\\
+ -r htmlextra --reporter-htmlextra-export ./results/report.html

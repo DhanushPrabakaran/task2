@@ -1,5 +1,6 @@
 const Products = require("../models/Products");
 const solrClient = require("../config/solr");
+
 exports.allProducts = async (req, res) => {
   const { limit = 20, offset = 0, search = "" } = req.query;
 
@@ -27,10 +28,20 @@ exports.allProductsWithSolrSearch = async (req, res) => {
     // Build the query for Solr
     const query = solrClient
       .createQuery()
-      .q(search ? `product_name:*${search}*` : "*:*") // Search by product name or fetch all if search is empty
+      .q(search ? `*${search}*` : "*:*") // Search by product name or fetch all if search is empty
+      .qop("OR") // Use OR between words (default in edismax)
+      .defType("edismax") // Use edismax parser
+      .qf({
+        product_name: 0.2,
+        category: 0.3,
+        stock: 0.4,
+        current_price: 0.5,
+        discount_price: 1.1,
+        description: 1.2,
+      })
       .start(offset) // Use the offset for pagination
       .rows(limit); // Use the limit for pagination size
-
+    console.log(query);
     // Execute the Solr search
     solrClient.search(query, (err, result) => {
       if (err) {
@@ -55,30 +66,6 @@ exports.allProductsWithSolrSearch = async (req, res) => {
   }
 };
 
-// exports.allProductsWithSolrSearch = async (req, res) => {
-//    const { limit = 20, offset = 0, search = "" } = req.query;
-//   try {
-//     const query = solrClient
-//       .createQuery()
-//       .q("*:*") // Default query if not provided
-//       .start(0)
-//       .rows(10);
-
-//     solrClient.search(query, (err, result) => {
-//       if (err) {
-//         console.error(err);
-//         return res
-//           .status(500)
-//           .json({ error: "Solr query error", details: err });
-//       }
-
-//       res.json(result.response);
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).send("server error in getting all products");
-//   }
-// };
 exports.allProductsWithoutLimit = async (req, res) => {
   try {
     const allProducts = await Products.allProductsWithoutLimit();
