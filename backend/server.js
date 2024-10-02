@@ -21,7 +21,7 @@ app.use("/api/auth", authRoutes);
 //
 
 // authmiddleware
-app.use("/api/products", productRoutes);
+app.use("/api/products", authmiddleware, productRoutes);
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
