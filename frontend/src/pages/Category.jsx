@@ -4,13 +4,13 @@ const Category = () => {
 
   const listOfCatagory = ["toys", "clothes", "shoes", "watch", "mobile"];
   return (
-    <div className="hero bg-base-200 min-h-screen">
+    <div className="hero bg-base-200 min-h-screen text-secondary-content">
       <div className="w-full h-full flex flex-wrap align-middle items-center justify-center ">
         {listOfCatagory.map((catagory, index) => {
           return (
             <div
               key={index}
-              className="card bg-base-100 image-full w-96 shadow-xl m-2 "
+              className="card bg-base-100 image-full w-96 shadow-xl m-2  "
             >
               <figure>
                 <img
