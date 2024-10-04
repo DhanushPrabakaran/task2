@@ -81,10 +81,22 @@ exports.allProductsWithSolrSearch = async (req, res) => {
       search = search.replace(underMatch[0], "").trim(); // Remove "under" filter from the query
     }
 
-    const aboveMatch = search.match(/above\s*(\d+)/); // Check for "above" keyword
-    if (aboveMatch) {
-      priceRange.min = parseFloat(aboveMatch[1]); // Set the min price
-      search = search.replace(aboveMatch[0], "").trim(); // Remove "above" filter from the query
+    // Regex for "less than", "under", "lesser than", and handling "than/then" typo
+    const lesserMatch = search.match(
+      /(?:under|below|lesser\s*(than|then)|less\s*(than|then))\s*(\d+)/i
+    );
+    if (lesserMatch) {
+      priceRange.max = parseFloat(lesserMatch[3]); // Set the max price
+      search = search.replace(lesserMatch[0], "").trim(); // Remove the matched portion from the search string
+    }
+
+    // Regex for "greater than" and similar comparisons
+    const greaterMatch = search.match(
+      /(?:above|greater\s*(than|then)|)\s*(\d+)/i
+    );
+    if (greaterMatch) {
+      priceRange.min = parseFloat(greaterMatch[2]); // Set the min price
+      search = search.replace(greaterMatch[0], "").trim(); // Remove the matched portion from the search string
     }
 
     // Clean up any leftover irrelevant spaces or words in the search query

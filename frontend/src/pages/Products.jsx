@@ -3,7 +3,6 @@ import axiosInstance from "../utils/axios";
 import ProjectCard from "../components/ProjectCard";
 const Products = () => {
   const [data, setData] = useState([]);
-  const [flag, setFlag] = useState(false); // Toggle between normal and Solr search
   const [searchTerm, setSearchTerm] = useState(""); // General search term (used for both)
   const [page, setPage] = useState(1); // Current page for pagination
   const [limit] = useState(10); // Products per page
@@ -20,13 +19,15 @@ const Products = () => {
           search: searchTerm,
         };
 
-        const endpoint = flag
-          ? "/api/products/allproductsolr" // Solr-based search
-          : "/api/products/allproducts"; // Normal search
+        // const endpoint = "/api/products/allproductsolr"; // Solr-based search
+        // Normal search
 
-        const response = await axiosInstance.get(endpoint, {
-          params: searchParams,
-        });
+        const response = await axiosInstance.get(
+          "/api/products/allproductsolr",
+          {
+            params: searchParams,
+          }
+        );
         if (!response) {
           throw new Error("Network response was not ok");
         }
@@ -41,11 +42,11 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, [limit, page, searchTerm, flag]); // Re-fetch products when relevant states change
+  }, [limit, page, searchTerm]); // Re-fetch products when relevant states change
 
-  const handleSearch = () => {
-    setPage(1); // Reset to first page on search
-  };
+  // const handleSearch = () => {
+  //   setPage(1); // Reset to first page on search
+  // };
 
   const totalPages = Math.ceil(total / limit);
 
@@ -54,20 +55,17 @@ const Products = () => {
       <div className="p-4 flex flex-col justify-center items-center">
         <div className="join">
           <input
-            className="input input-bordered join-item"
+            className="input input-bordered join-item w-96"
             placeholder="Search"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPage(1);
+            }}
           />
-          <button
-            className="btn join-item rounded-r-full"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
         </div>
 
-        <div className="flex items-center justify-center gap-4 mt-2">
+        {/* <div className="flex items-center justify-center gap-4 mt-2">
           <label className="label cursor-pointer">
             <span className="label-text">Use Solr Search?</span>
             <input
@@ -77,7 +75,7 @@ const Products = () => {
               onChange={() => setFlag(!flag)} // Toggle between Solr and normal search
             />
           </label>
-        </div>
+        </div> */}
 
         <div className="w-full h-full flex flex-wrap items-center justify-center mt-4">
           {data.length > 0 ? (
@@ -107,7 +105,14 @@ const Products = () => {
               // </div>
             ))
           ) : (
-            <p>Loading products...</p>
+            <div>
+              <p className=" justify-center text-center">
+                we have other topic to search...
+              </p>
+              <p className=" text-secondary">
+                checkout: toys , colthes ,watches and more
+              </p>
+            </div>
           )}
         </div>
 

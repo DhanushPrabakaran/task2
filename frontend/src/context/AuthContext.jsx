@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ ...auth, login, signup, logout }}>
-      <div className=" font-sans">{children}</div>
+      <div className=" text-lg">{children}</div>
     </AuthContext.Provider>
   );
 };
