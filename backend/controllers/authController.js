@@ -87,7 +87,7 @@ exports.signup = async (req, res) => {
 // Login controller
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(res.body);
   try {
     const user = await User.findByEmail(email);
     if (!user) {

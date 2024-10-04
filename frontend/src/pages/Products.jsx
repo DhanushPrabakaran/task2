@@ -11,14 +11,14 @@ const Products = () => {
 
   // Common function for fetching products (Solr or normal based on flag)
   useEffect(() => {
-
     const fetchProducts = async () => {
       const offset = (page - 1) * limit;
       try {
         const searchParams = {
           limit: limit,
           offset: offset,
-          search: searchTerm,};
+          search: searchTerm,
+        };
 
         const endpoint = flag
           ? "/api/products/allproductsolr" // Solr-based search
@@ -27,7 +27,6 @@ const Products = () => {
         const response = await axiosInstance.get(endpoint, {
           params: searchParams,
         });
-
         if (!response) {
           throw new Error("Network response was not ok");
         }
