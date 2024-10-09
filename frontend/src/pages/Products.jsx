@@ -110,7 +110,7 @@ const Products = () => {
                 we have other topic to search...
               </p>
               <p className=" text-secondary">
-                checkout: toys , colthes ,watches and more
+                checkout: toys , clothes ,watch and more
               </p>
             </div>
           )}
