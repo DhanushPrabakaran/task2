@@ -4,7 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 require("dotenv").config();
 const productRoutes = require("./routes/productRoutes");
 const authmiddleware = require("./middlewares/authmiddleware");
-// Create an Express app
+
 const app = express();
 
 // Middleware
@@ -23,7 +23,7 @@ app.use("/api/auth", authRoutes);
 // authmiddleware
 app.use("/api/products", authmiddleware, productRoutes);
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

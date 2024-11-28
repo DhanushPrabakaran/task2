@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "newman run ./test/task2ApiTesting.postman_collection.json -r htmlextra --reporter-htmlextra-export ./results/report.html",
-    "start": "nodemon server"
+    "start": "node server"
   },
   "keywords": [],
   "author": "",
